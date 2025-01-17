@@ -1,14 +1,15 @@
 import { Injectable } from "@nestjs/common";
-import { CreateCardDto } from "../dto/createCard.dto";
+import { CreateCardDto } from "../dto/create-card.dto";
 import { TokenCardResponse } from "src/core/model/payments/token-card-response.model";
 import { MerchantDataResponse } from "src/core/model/payments/acceptance-token-response.model";
 import { ResponseService } from "../dto/response-service.dto";
+import { TransactionDto } from "../dto/new-transaction.dto";
 
 @Injectable()
 export abstract class IProcessorPaymentService {
     abstract getAcceptanceToken(): Promise<MerchantDataResponse>;
     abstract setPaymentMethod(): Promise<any>;
     abstract getTokenCard(dataCard: CreateCardDto): Promise<ResponseService>;
-    abstract processPayment(): Promise<any>;
+    abstract processPayment(transactionData : TransactionDto): Promise<any>;
     abstract getPaymentStatus(): Promise<any>;
 }

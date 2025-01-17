@@ -5,10 +5,11 @@ import { PaymentMethodUc } from "src/core/use-case/payments/payment-method.uc";
 import { TokenCardUc } from "src/core/use-case/payments/token-card.uc";
 import { ProcessPaymentUc } from "src/core/use-case/payments/process-payment.uc";
 import { PaymentStatusUc } from "src/core/use-case/payments/payment-status.uc";
-import { CreateCardDto } from "src/controller/dto/createCard.dto";
+import { CreateCardDto } from "src/controller/dto/create-card.dto";
 import { TokenCardResponse } from "src/core/model/payments/token-card-response.model";
 import { MerchantDataResponse } from "src/core/model/payments/acceptance-token-response.model";
 import { ResponseService } from "src/controller/dto/response-service.dto";
+import { TransactionDto } from "src/controller/dto/new-transaction.dto";
 
 @Injectable()
 export class ProcessorPaymentService implements IProcessorPaymentService {
@@ -29,8 +30,8 @@ export class ProcessorPaymentService implements IProcessorPaymentService {
     getTokenCard(dataCard: CreateCardDto): Promise<ResponseService> {
         return this.tokenCardUc.execute(dataCard);
     }
-    processPayment(): Promise<any> {
-        return this.processPaymentUc.execute();
+    processPayment(transactionData : TransactionDto): Promise<any> {
+        return this.processPaymentUc.execute(transactionData);
     }
     getPaymentStatus(): Promise<any> {
         return this.paymentStatusUc.execute();

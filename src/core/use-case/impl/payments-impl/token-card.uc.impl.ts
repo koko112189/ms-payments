@@ -6,7 +6,7 @@ import GeneralUtils from "src/common/utils/general-utils";
 import { Etask, EtaskDesc } from "src/common/utils/enums/task.enum";
 import { ResponseService } from "src/controller/dto/response-service.dto";
 import { EmessageMapping } from "src/common/utils/enums/message.enum";
-import { CreateCardDto } from "src/controller/dto/createCard.dto";
+import { CreateCardDto } from "src/controller/dto/create-card.dto";
 
 @Injectable()
 export class TokenCardUcImpl implements TokenCardUc {
