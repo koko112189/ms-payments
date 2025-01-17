@@ -12,5 +12,5 @@ export abstract class IProcessorPaymentProvider {
     abstract setPaymentMethod(_paymentSourceDto: paymentSourceDto): Promise<PaymentSourceResponse>;
     abstract getTokenCard(CreateCardDto: CreateCardDto): Promise<TokenCardResponse>;
     abstract processPayment(transactionData : TransactionDto): Promise<any>;
-    abstract getPaymentStatus(): Promise<any>;
+    abstract getPaymentStatus(idTrasnsaction: string): Promise<any>;
 }

@@ -4,11 +4,12 @@ import { TokenCardResponse } from "src/core/model/payments/token-card-response.m
 import { MerchantDataResponse } from "src/core/model/payments/acceptance-token-response.model";
 import { ResponseService } from "../dto/response-service.dto";
 import { TransactionDto } from "../dto/new-transaction.dto";
+import { paymentSourceDto } from "../dto/payment-source.dto";
 
 @Injectable()
 export abstract class IProcessorPaymentService {
     abstract getAcceptanceToken(): Promise<MerchantDataResponse>;
-    abstract setPaymentMethod(): Promise<any>;
+    abstract setPaymentMethod(_paymentSourceDto: paymentSourceDto): Promise<any>;
     abstract getTokenCard(dataCard: CreateCardDto): Promise<ResponseService>;
     abstract processPayment(transactionData : TransactionDto): Promise<any>;
     abstract getPaymentStatus(): Promise<any>;

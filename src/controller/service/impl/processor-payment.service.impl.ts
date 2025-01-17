@@ -10,6 +10,7 @@ import { TokenCardResponse } from "src/core/model/payments/token-card-response.m
 import { MerchantDataResponse } from "src/core/model/payments/acceptance-token-response.model";
 import { ResponseService } from "src/controller/dto/response-service.dto";
 import { TransactionDto } from "src/controller/dto/new-transaction.dto";
+import { paymentSourceDto } from "src/controller/dto/payment-source.dto";
 
 @Injectable()
 export class ProcessorPaymentService implements IProcessorPaymentService {
@@ -24,8 +25,8 @@ export class ProcessorPaymentService implements IProcessorPaymentService {
     getAcceptanceToken(): Promise<MerchantDataResponse> {
         return this.acceptanceTokenUc.execute();
     }
-    setPaymentMethod(): Promise<any> {
-        return this.paymentMethodUc.execute();
+    setPaymentMethod(_paymentSourceDto: paymentSourceDto): Promise<any> {
+        return this.paymentMethodUc.execute(_paymentSourceDto);
     }
     getTokenCard(dataCard: CreateCardDto): Promise<ResponseService> {
         return this.tokenCardUc.execute(dataCard);

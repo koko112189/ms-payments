@@ -2,6 +2,7 @@ import { Body, Controller, Get, Post, Put, Query } from "@nestjs/common";
 import { ApiBody, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { IProcessorPaymentService } from "./service/processor-payment.service";
 import { CreateCardDto } from "./dto/create-card.dto";
+import { TransactionDto } from "./dto/new-transaction.dto";
 
 @ApiTags('Payment')
 @Controller('Payment')
@@ -17,10 +18,9 @@ export class ProcessorPaymentController {
 
     @Post()
     @ApiOperation({ summary: 'set payment' })
-    @ApiBody({ type: Object })
-    async Payout() {
-        throw new Error("Method not implemented.");
-        //return await this.processorPaymentService.processPayment();
+    @ApiBody({ type: TransactionDto })
+    async Payout(@Body() data: TransactionDto) {
+        return await this.processorPaymentService.processPayment(data);
     }
 
     @Post("tokenizeCard")

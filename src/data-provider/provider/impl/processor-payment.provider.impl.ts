@@ -56,22 +56,25 @@ export class ProcessorPaymentProvider implements IProcessorPaymentProvider {
     }
     async processPayment(transactionData : TransactionDto): Promise<any> {
         try {
-            const data = JSON.stringify({...TransactionDto});
+            const data = JSON.stringify({...transactionData});
             const config = {
                 headers: {
                     'Authorization': `Bearer ${PaymentConfig.apiKeyPrivate}`,
                     'Content-Type': 'application/json',
                 },
             };
+            console.log("datos a enviar", data);
             const url = `${PaymentConfig.url}/${PaymentConfig.endpoint_process_payment}`;
             const response = await firstValueFrom(this.httpService.post<TokenCardResponse>(url, data, config));
             return response.data;
         } catch (error) {
+            console.log("error en el proceso de pago: ", error);
             GeneralUtils.assignTaskError(error, Etask.CREATE, EtaskDesc.CREATE);
             throw error;
         }
     }
-    getPaymentStatus(): Promise<any> {
-        throw new Error("Method not implemented.");
+    async getPaymentStatus(idTrasnsaction : string): Promise<any> {
+        const response =  await firstValueFrom(this.httpService.get(`${PaymentConfig.url}/${PaymentConfig.endpoint_process_payment}/${idTrasnsaction}`));
+        return response;
     }    
 }

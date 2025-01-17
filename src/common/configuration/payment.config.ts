@@ -1,7 +1,7 @@
 export const PaymentConfig =  {
     url: process.env.API_COMPANY_URL,
     apiKey: process.env.COMPANY_API_KEY,
-    apiKeyPrivate: process.env.COMPANY_API_KEY_PRIVATE,
+    apiKeyPrivate: process.env.COMPANY_PRIVATE_API_KEY,
     integrityKey: process.env.COMPANY_INTEGRITY_KEY,
     eventkey: process.env.COMPANY_EVENT_KEY,
     endpoint_token_card: process.env.ENDPOINT_TOKEN_CARD,
