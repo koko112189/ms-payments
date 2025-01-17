@@ -1,17 +1,17 @@
 import { Module } from '@nestjs/common';
-import { ExampleController } from './item.controller';
 import { CoreModule } from 'src/core/core.module';
 import { DataProviderModule } from 'src/data-provider/data-provider.module';
-import { IExampleDto } from './service/example.service';
-import { ItemService } from './service/impl/item.service.impl';
 import { IMessageService } from './service/message.service';
 import { MessageService } from './service/impl/message.service.impl';
+import { ProcessorPaymentService } from './service/impl/processor-payment.service.impl';
+import { IProcessorPaymentService } from './service/processor-payment.service';
+import { ProcessorPaymentController } from './payment.controller';
 
 @Module({
     imports: [CoreModule, DataProviderModule],
-    controllers: [ExampleController],
+    controllers: [ProcessorPaymentController],
     providers: [
-        { provide: IExampleDto, useClass: ItemService },
+        { provide: IProcessorPaymentService, useClass: ProcessorPaymentService },
         { provide: IMessageService, useClass: MessageService }
     ]
 })
