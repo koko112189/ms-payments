@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Inject, Injectable } from "@nestjs/common";
 import { IProcessorPaymentService } from "../processor-payment.service";
 import { AcceptanceTokenUc } from "src/core/use-case/payments/acceptance-token.uc";
 import { PaymentMethodUc } from "src/core/use-case/payments/payment-method.uc";
@@ -11,6 +11,7 @@ import { MerchantDataResponse } from "src/core/model/payments/acceptance-token-r
 import { ResponseService } from "src/controller/dto/response-service.dto";
 import { TransactionDto } from "src/controller/dto/new-transaction.dto";
 import { paymentSourceDto } from "src/controller/dto/payment-source.dto";
+import { ClientProxy } from "@nestjs/microservices";
 
 @Injectable()
 export class ProcessorPaymentService implements IProcessorPaymentService {
@@ -19,7 +20,8 @@ export class ProcessorPaymentService implements IProcessorPaymentService {
         private readonly paymentMethodUc : PaymentMethodUc, 
         private readonly paymentStatusUc : PaymentStatusUc,
         private readonly processPaymentUc : ProcessPaymentUc, 
-        private readonly tokenCardUc : TokenCardUc
+        private readonly tokenCardUc : TokenCardUc,
+        @Inject('RABBIT_MQ') private readonly rabbitmqClient: ClientProxy
 
     ) {}
     getAcceptanceToken(): Promise<MerchantDataResponse> {
@@ -31,7 +33,10 @@ export class ProcessorPaymentService implements IProcessorPaymentService {
     getTokenCard(dataCard: CreateCardDto): Promise<ResponseService> {
         return this.tokenCardUc.execute(dataCard);
     }
-    processPayment(transactionData : TransactionDto): Promise<any> {
+    async processPayment(transactionData : TransactionDto): Promise<any> {
+        console.log("processPayment del servicio", transactionData);
+        const customer = await this.rabbitmqClient.send('verify_customer', {customerData: transactionData.customer_data, email: transactionData.customer_email, shipping_address : transactionData.shipping_address});
+        console.log("customer esta en", customer);
         return this.processPaymentUc.execute(transactionData);
     }
     getPaymentStatus(): Promise<any> {

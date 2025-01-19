@@ -30,8 +30,8 @@ export class ProcessPaymentUcImpl implements ProcessPaymentUc{
                 attempts++; 
                 try {
                     const status = await this.processorPaymentProvider.getPaymentStatus(created_transaction.data.id);
-                    if (status.data.status !== 'PENDING') {
-                        console.log("status: ", status.data);
+                    if (status.data.status != 'PENDING') {
+                        console.log("status es: ", status.data.status);
                         clearInterval(interval);
                         resolve(status.data);
                     }

@@ -6,9 +6,10 @@ import { MessageService } from './service/impl/message.service.impl';
 import { ProcessorPaymentService } from './service/impl/processor-payment.service.impl';
 import { IProcessorPaymentService } from './service/processor-payment.service';
 import { ProcessorPaymentController } from './payment.controller';
+import { RabbitMqModule } from 'src/rabbit-mq/rabbit-mq.module';
 
 @Module({
-    imports: [CoreModule, DataProviderModule],
+    imports: [CoreModule, DataProviderModule, RabbitMqModule],
     controllers: [ProcessorPaymentController],
     providers: [
         { provide: IProcessorPaymentService, useClass: ProcessorPaymentService },
